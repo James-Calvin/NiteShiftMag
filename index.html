@@ -22,9 +22,9 @@
       </div>
     </nav>
     <div class="hero-content">
-      <p class="hero-kicker">Grassroots drifting</p>
+      <p class="hero-kicker">Grassroots drifting after dark</p>
       <h1>The underground zine for people who live sideways.</h1>
-      <p class="hero-text">Nite Shift Magazine tracks the crews, builds, and stories powering the grassroots drifting scene. Analog photos, raw interviews, and a little tire smoke.</p>
+      <p class="hero-text">Nite Shift Magazine tracks the crews, builds, and late-night stories powering the grassroots drifting scene. Analog photos, raw interviews, and a little tire smoke.</p>
       <div class="hero-actions">
         <a class="button primary" href="#subscribe">Get release updates</a>
         <a class="button ghost" href="#features">See what's inside</a>
@@ -34,7 +34,7 @@
   <main>
     <section class="section about" id="about">
       <div class="section-content">
-        <h2>Built by drivers, shot on film, printed for night owls.</h2>
+        <h2>Built by drifters for drifters.</h2>
         <p>Nite Shift Magazine is an independent print project shedding light on the overlooked drivers who keep grassroots drifting alive. We cover pop-up lots, mountain passes, backyard builds, and the culture that keeps headlights pointed sideways long after the crowds go home.</p>
         <p class="accent">Issue 001 drops later this year. We're compiling features from crews across North America, plus a few international guests.</p>
       </div>
@@ -60,7 +60,7 @@
       <div class="spotlight-grid">
         <div class="spotlight-copy">
           <h2>Why we print</h2>
-          <p>We live for tangible keepsakes. Each issue is risograph printed on heavyweight stock with high-contrast inks that glow under the shop lights. Small batch runs mean every copy feels special.</p>
+          <p>We love algorithms, but we live for tangible keepsakes. Each issue is risograph printed on heavyweight stock with high-contrast inks that glow under the shop lights. Small batch runs mean every copy feels special.</p>
           <p>Follow along as we build the first release, document the crews, and launch the midnight screenings and pop-up gallery events that will come with it.</p>
         </div>
         <ul class="spotlight-list">
@@ -75,7 +75,7 @@
       <div class="subscribe-card">
         <h2>Stay in the loop</h2>
         <p>Drop your email and we’ll ping you when preorders open. No spam, just night-drive energy.</p>
-        <form id="subscribe-form">
+        <form id="subscribe-form" action="https://formspree.io/f/xldpdepn" method="POST">
           <label class="sr-only" for="email">Email</label>
           <div class="form-group">
             <input type="email" id="email" name="email" placeholder="you@example.com" required>
@@ -103,23 +103,52 @@
     const emailInput = document.getElementById('email');
     const feedback = document.querySelector('.form-feedback');
     const year = document.getElementById('year');
+    const formEndpoint = form ? form.getAttribute('action') : '';
 
-    year.textContent = new Date().getFullYear();
+    if (year) {
+      year.textContent = new Date().getFullYear();
+    }
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      if (!emailInput.value.trim()) {
-        feedback.textContent = 'Please enter your email address.';
-        feedback.classList.remove('success');
-        feedback.classList.add('error');
-        emailInput.focus();
-        return;
-      }
-      feedback.textContent = "You're on the list. See you under the lights.";
-      feedback.classList.remove('error');
-      feedback.classList.add('success');
-      form.reset();
-    });
+    if (form) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = emailInput.value.trim();
+
+        if (!email) {
+          feedback.textContent = 'Please enter your email address.';
+          feedback.classList.remove('success');
+          feedback.classList.add('error');
+          emailInput.focus();
+          return;
+        }
+
+        feedback.textContent = 'Sending...';
+        feedback.classList.remove('error', 'success');
+
+        try {
+          const response = await fetch(formEndpoint, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: new FormData(form),
+          });
+
+          if (!response.ok) {
+            throw new Error('Form submission failed');
+          }
+
+          feedback.textContent = "You're on the list. See you under the lights.";
+          feedback.classList.add('success');
+          form.reset();
+        } catch (error) {
+          console.error(error);
+          feedback.textContent = 'Something went wrong. Try again or email crew@niteshiftmag.com.';
+          feedback.classList.add('error');
+        }
+      });
+    }
   </script>
 </body>
 </html>
+
+
+
