@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nite Shift Magazine</title>
+  <meta name="description" content="Nite Shift Magazine is a grassroots drifting print project celebrating underground car culture and night-drive energy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero" id="top">
+    <nav class="nav">
+      <div class="brand">Nite Shift Magazine</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#features">Preview</a>
+        <a href="#inside">Inside the Nite Shift</a>
+        <a href="#subscribe" class="highlight">Subscribe</a>
+      </div>
+    </nav>
+    <div class="hero-content">
+      <p class="hero-kicker">Grassroots drifting</p>
+      <h1>The underground zine for people who live sideways.</h1>
+      <p class="hero-text">Nite Shift Magazine tracks the crews, builds, and stories powering the grassroots drifting scene. Analog photos, raw interviews, and a little tire smoke.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#subscribe">Get release updates</a>
+        <a class="button ghost" href="#features">See what's inside</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="section about" id="about">
+      <div class="section-content">
+        <h2>Built by drivers, shot on film, printed for night owls.</h2>
+        <p>Nite Shift Magazine is an independent print project shedding light on the overlooked drivers who keep grassroots drifting alive. We cover pop-up lots, mountain passes, backyard builds, and the culture that keeps headlights pointed sideways long after the crowds go home.</p>
+        <p class="accent">Issue 001 drops later this year. We're compiling features from crews across North America, plus a few international guests.</p>
+      </div>
+    </section>
+    <section class="section features" id="features">
+      <h2>Inside issue 001</h2>
+      <div class="feature-grid">
+        <article class="card">
+          <h3>Night Shift Stories</h3>
+          <p>Long-form features on drivers chasing midnight tandems. Think underground meetups, parking garage takeovers, and the playlists that keep the caravan rolling.</p>
+        </article>
+        <article class="card">
+          <h3>Trackside Tech</h3>
+          <p>DIY aero, backyard fab, and budget suspension setups that actually work. We break down builds with the people who wrench on them.</p>
+        </article>
+        <article class="card">
+          <h3>Analog Gallery</h3>
+          <p>Film and digital sets that celebrate neon reflections, tire smoke, and the motion blur of a perfect flick. No staged studio shots—just real nights out.</p>
+        </article>
+      </div>
+    </section>
+    <section class="section spotlight" id="inside">
+      <div class="spotlight-grid">
+        <div class="spotlight-copy">
+          <h2>Why we print</h2>
+          <p>We live for tangible keepsakes. Each issue is risograph printed on heavyweight stock with high-contrast inks that glow under the shop lights. Small batch runs mean every copy feels special.</p>
+          <p>Follow along as we build the first release, document the crews, and launch the midnight screenings and pop-up gallery events that will come with it.</p>
+        </div>
+        <ul class="spotlight-list">
+          <li><span class="dot"></span>Limited-run physical magazine</li>
+          <li><span class="dot"></span>Exclusive interviews &amp; playlists</li>
+          <li><span class="dot"></span>Community spotlight submissions</li>
+          <li><span class="dot"></span>Behind-the-scenes build diaries</li>
+        </ul>
+      </div>
+    </section>
+    <section class="section subscribe" id="subscribe">
+      <div class="subscribe-card">
+        <h2>Stay in the loop</h2>
+        <p>Drop your email and we’ll ping you when preorders open. No spam, just night-drive energy.</p>
+        <form id="subscribe-form">
+          <label class="sr-only" for="email">Email</label>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            <button type="submit">Notify me</button>
+          </div>
+        </form>
+        <p class="form-feedback" aria-live="polite"></p>
+        <small class="disclaimer">We respect your inbox. Unsubscribe anytime.</small>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-brand">Nite Shift Magazine</div>
+    <div class="footer-links">
+      <a href="#top">Back to top</a>
+      <span class="divider">•</span>
+      <a href="mailto:crew@niteshiftmag.com">crew@niteshiftmag.com</a>
+      <span class="divider">•</span>
+      <span>@niteshiftmag</span>
+    </div>
+    <p class="footer-note">© <span id="year"></span> Nite Shift Magazine. All rights reserved.</p>
+  </footer>
+  <script>
+    const form = document.getElementById('subscribe-form');
+    const emailInput = document.getElementById('email');
+    const feedback = document.querySelector('.form-feedback');
+    const year = document.getElementById('year');
+
+    year.textContent = new Date().getFullYear();
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!emailInput.value.trim()) {
+        feedback.textContent = 'Please enter your email address.';
+        feedback.classList.remove('success');
+        feedback.classList.add('error');
+        emailInput.focus();
+        return;
+      }
+      feedback.textContent = "You're on the list. See you under the lights.";
+      feedback.classList.remove('error');
+      feedback.classList.add('success');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
